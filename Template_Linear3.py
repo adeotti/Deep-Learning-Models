@@ -22,12 +22,10 @@ def viz(train_data = X_train,
         test_data = X_test,
         test_label = y_test,
         inference = None) :
-
     plt.figure(figsize=(14,10))
     plt.scatter(train_data,train_label, color = "red", label = "Training data")
     plt.scatter(test_data,test_label, color = "green", label = "testing data")
     plt.grid(True, linestyle = "--")
-
     if inference is not None :
         plt.scatter(test_data,inference, color = "black",label = "Testing inference")
     plt.legend() 
@@ -47,7 +45,6 @@ loss_function = nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(),
                             lr = 0.01)
 epoch = 1000
-
 for epoch in range(epoch):
     model.train()
     y_pred = model(X_train)
@@ -60,8 +57,8 @@ for epoch in range(epoch):
     with torch.inference_mode():
         test_pred = model(X_test)
         test_loss = loss_function(test_pred,y_test)
-    #if epoch%10 == 0:
-        #print(f"epoch : {epoch} | loss : {loss_func} | test loss : {test_loss}") 
+    if epoch%10 == 0:
+        print(f"epoch : {epoch} | loss : {loss_func} | test loss : {test_loss}") 
 
 with torch.inference_mode():
     y_pred = model(X_test)
